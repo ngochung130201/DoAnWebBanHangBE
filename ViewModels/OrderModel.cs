@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DoAnBE.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace DoAnBE.ViewModels
 {
@@ -10,8 +11,13 @@ namespace DoAnBE.ViewModels
         public bool IsStatus { get; set; }
         public bool Delivered { get; set; }
         public DateTime DeliveryDate { get; set; }
-        public CustomerModel Customer { get; set; }
+        public Customer? Customer { get; set; }
         public Guid CustomerID { get; set; }
+        public Guid ProductID { get; set; }
+        public string ProductName { get; set; }
+        public bool IsFreeShip { get; set; }
+        public decimal? PriceSum { get; set; }
+        public int Quantity { get; set; }
         public int Discount { get; set; }
     }
 }

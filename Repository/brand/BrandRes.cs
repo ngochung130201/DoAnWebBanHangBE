@@ -17,6 +17,7 @@ namespace DoAnBE.Repository.brand
         }
         public async Task<int> CraeteBrandAsync(BrandModel brandModel)
         {
+           
             var newBrand = _mapper.Map<Brand>(brandModel);
             _context.Brands.Add(newBrand);
             await _context.SaveChangesAsync();
@@ -26,17 +27,10 @@ namespace DoAnBE.Repository.brand
 
         public async Task DeleteBrandAsync(int id)
         {
-            if(id != null)
-            {
+           var brand = await _context.Brands.SingleOrDefaultAsync(x=>x.BrandID == id);
+            _context.Brands.Remove(brand);
+            await _context.SaveChangesAsync();
 
-                var getBrand = await _context.Brands.FindAsync(id);
-                if (getBrand != null)
-                {
-                    _context.Brands.Remove(getBrand);
-                    await _context.SaveChangesAsync();
-
-                }
-            }
         }
 
         public async Task<List<BrandModel>> GetBrandAllAsync()

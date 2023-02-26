@@ -1,4 +1,5 @@
-﻿using DoAnBE.ViewModels;
+﻿using DoAnBE.Models;
+using DoAnBE.ViewModels;
 
 namespace DoAnBE.Repository.product
 {

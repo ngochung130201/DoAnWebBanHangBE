@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DoAnBE.Migrations
 {
     [DbContext(typeof(ComputerdbContext))]
-    [Migration("20230209054453_fix model 9-2 validator email supplier")]
-    partial class fixmodel92validatoremailsupplier
+    [Migration("20230221131657_fix 2")]
+    partial class fix2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -81,7 +81,6 @@ namespace DoAnBE.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BrandID"), 1L, 1);
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("BrandID");
@@ -505,78 +504,71 @@ namespace DoAnBE.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("BrandID")
+                    b.Property<int?>("BrandID")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("CateID")
+                    b.Property<Guid?>("CateID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("CreateBy")
+                    b.Property<int?>("CreateBy")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Detail")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Hot")
+                    b.Property<DateTime?>("Hot")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Image")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsVat")
+                    b.Property<bool?>("IsVat")
                         .HasColumnType("bit");
 
                     b.Property<string>("ListImage")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MetaDescription")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MetaKeyword")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Price")
+                    b.Property<decimal?>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<Guid>("ProductCategoryCateID")
+                    b.Property<Guid?>("ProductCategoryCateID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("PromotionPrice")
+                    b.Property<decimal?>("PromotionPrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("Quantity")
+                    b.Property<int?>("Quantity")
                         .HasColumnType("int");
 
                     b.Property<string>("Slug")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SupplierID")
+                    b.Property<Guid?>("Supplierid")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("UpdateBy")
+                    b.Property<int?>("UpdateBy")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ViewCount")
+                    b.Property<int?>("ViewCount")
                         .HasColumnType("int");
 
                     b.HasKey("ProductID");
@@ -585,7 +577,7 @@ namespace DoAnBE.Migrations
 
                     b.HasIndex("ProductCategoryCateID");
 
-                    b.HasIndex("SupplierID");
+                    b.HasIndex("Supplierid");
 
                     b.ToTable("Products");
                 });
@@ -606,11 +598,9 @@ namespace DoAnBE.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("MetaDescription")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MetaKeyword")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -726,7 +716,6 @@ namespace DoAnBE.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SupplierID");
@@ -782,21 +771,15 @@ namespace DoAnBE.Migrations
                 {
                     b.HasOne("DoAnBE.Models.Brand", "Brand")
                         .WithMany()
-                        .HasForeignKey("BrandID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BrandID");
 
                     b.HasOne("DoAnBE.Models.ProductCategory", "ProductCategory")
                         .WithMany()
-                        .HasForeignKey("ProductCategoryCateID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductCategoryCateID");
 
                     b.HasOne("DoAnBE.Models.Supplier", "Supplier")
                         .WithMany()
-                        .HasForeignKey("SupplierID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Supplierid");
 
                     b.Navigation("Brand");
 

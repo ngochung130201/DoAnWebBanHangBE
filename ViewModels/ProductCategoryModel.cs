@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DoAnBE.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace DoAnBE.ViewModels
 {
@@ -20,5 +21,6 @@ namespace DoAnBE.ViewModels
         public int UpdateBy { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
+
     }
 }

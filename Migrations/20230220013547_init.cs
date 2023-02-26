@@ -37,7 +37,7 @@ namespace DoAnBE.Migrations
                 {
                     BrandID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -134,8 +134,8 @@ namespace DoAnBE.Migrations
                 name: "OrderDetails",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OrderDetailId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     OrderId = table.Column<int>(type: "int", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
                     ProductName = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -144,7 +144,7 @@ namespace DoAnBE.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderDetails", x => x.Id);
+                    table.PrimaryKey("PK_OrderDetails", x => x.OrderDetailId);
                 });
 
             migrationBuilder.CreateTable(
@@ -216,7 +216,7 @@ namespace DoAnBE.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Phone = table.Column<int>(type: "int", nullable: false)
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -331,27 +331,27 @@ namespace DoAnBE.Migrations
                 {
                     ProductID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Slug = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ListImage = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    PromotionPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    IsVat = table.Column<bool>(type: "bit", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    Hot = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Detail = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ViewCount = table.Column<int>(type: "int", nullable: false),
-                    MetaKeyword = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MetaDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreateBy = table.Column<int>(type: "int", nullable: false),
-                    UpdateBy = table.Column<int>(type: "int", nullable: false),
+                    Slug = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ListImage = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    PromotionPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    IsVat = table.Column<bool>(type: "bit", nullable: true),
+                    Quantity = table.Column<int>(type: "int", nullable: true),
+                    Hot = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Detail = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ViewCount = table.Column<int>(type: "int", nullable: true),
+                    MetaKeyword = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MetaDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreateBy = table.Column<int>(type: "int", nullable: true),
+                    UpdateBy = table.Column<int>(type: "int", nullable: true),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ProductCategoryCateID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CateID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    BrandID = table.Column<int>(type: "int", nullable: false),
-                    SupplierID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    ProductCategoryCateID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CateID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Supplierid = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    BrandID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -360,20 +360,17 @@ namespace DoAnBE.Migrations
                         name: "FK_Products_Brands_BrandID",
                         column: x => x.BrandID,
                         principalTable: "Brands",
-                        principalColumn: "BrandID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "BrandID");
                     table.ForeignKey(
                         name: "FK_Products_ProductCategories_ProductCategoryCateID",
                         column: x => x.ProductCategoryCateID,
                         principalTable: "ProductCategories",
-                        principalColumn: "CateID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "CateID");
                     table.ForeignKey(
-                        name: "FK_Products_Suppliers_SupplierID",
-                        column: x => x.SupplierID,
+                        name: "FK_Products_Suppliers_Supplierid",
+                        column: x => x.Supplierid,
                         principalTable: "Suppliers",
-                        principalColumn: "SupplierID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "SupplierID");
                 });
 
             migrationBuilder.CreateTable(
@@ -437,9 +434,9 @@ namespace DoAnBE.Migrations
                 column: "ProductCategoryCateID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_SupplierID",
+                name: "IX_Products_Supplierid",
                 table: "Products",
-                column: "SupplierID");
+                column: "Supplierid");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

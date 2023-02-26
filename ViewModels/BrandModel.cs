@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DoAnBE.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace DoAnBE.ViewModels
 {
@@ -6,6 +7,8 @@ namespace DoAnBE.ViewModels
     {
         [Key]
         public int BrandID { get; set; }
-        public string Name { get; set; }
+        public string ?Name { get; set; }
+      
+
     }
 }

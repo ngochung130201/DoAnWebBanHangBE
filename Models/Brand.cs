@@ -6,6 +6,7 @@ namespace DoAnBE.Models
     {
         [Key]
         public int BrandID { get; set; }
-        public string Name { get; set; }
+        public string ?Name { get; set; }
+       
     }
 }
