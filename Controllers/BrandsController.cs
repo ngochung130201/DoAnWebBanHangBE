@@ -40,6 +40,11 @@ namespace DoAnBE.Controllers
         {
             try
             {
+                var brand = _context.Brands.SingleOrDefault(x=>x.Name.ToUpper() == Brand.Name.ToUpper());
+                if(brand !=null)
+                {
+                    return BadRequest("Thương hiệu đã tồn tại !");
+                }
                 var result = await _BrandRepo.CraeteBrandAsync(Brand);
                 return Ok(result);
             }
@@ -56,9 +61,10 @@ namespace DoAnBE.Controllers
                 await _BrandRepo.DeleteBrandAsync(id);
                 return Ok();
             }
-            catch
+            catch(Exception ex)
             {
-                return BadRequest();
+                
+                return BadRequest(ex);
             }
         }
         [HttpPut("{id}")]
@@ -67,6 +73,11 @@ namespace DoAnBE.Controllers
             if (id != Brand.BrandID)
             {
                 return NotFound();
+            }
+            var brand = _context.Brands.SingleOrDefault(x => x.Name.ToUpper() == Brand.Name.ToUpper());
+            if (brand != null)
+            {
+                return BadRequest("Thương hiệu đã tồn tại !");
             }
             await _BrandRepo.UpdateBrandAsync(id, Brand);
             return Ok();

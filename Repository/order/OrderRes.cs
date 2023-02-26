@@ -20,7 +20,23 @@ namespace DoAnBE.Repository.order
 
         public async Task<Guid> AddOrderAsync(OrderModel Order)
         {
-            var newOrder = _mapper.Map<Order>(Order);
+            var newOrder = new Order
+            {
+                OrderID = Guid.NewGuid(),
+                Delivered = Order.Delivered,
+                CustomerID= Order.CustomerID,
+                Discount= Order.Discount,
+                DeliveryDate= Order.DeliveryDate,
+                IsStatus= Order.IsStatus,
+                IsFreeShip = Order.IsFreeShip,
+                OrderDate = DateTime.Now,
+                PriceSum= Order.PriceSum,
+                ProductID= Order.ProductID,
+                ProductName= Order.ProductName,
+                Quantity= Order.Quantity,
+                
+                
+            };
             _context.Orders.Add(newOrder);
             await _context.SaveChangesAsync();
             return newOrder.OrderID;

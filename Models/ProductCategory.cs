@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DoAnBE.ViewModels;
+using System.ComponentModel.DataAnnotations;
 
 namespace DoAnBE.Models
 {
@@ -14,11 +15,13 @@ namespace DoAnBE.Models
         public bool IsStatus { get; set; }
         public int Sort { get; set; }
         public int ParentID { get; set; }
-        public string MetaKeyword { get; set; }
-        public string MetaDescription { get; set; }
+        public string? MetaKeyword { get; set; }
+        public string? MetaDescription { get; set; }
         public int CreateBy { get; set; }
         public int UpdateBy { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
+   
+
     }
 }

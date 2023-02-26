@@ -10,5 +10,7 @@ namespace DoAnBE.ViewModels
         public string Image { get; set; }
         public string Link { get; set; }
         public bool IsStatus { get; set; }
+
+        public IFormFile ?fileImages { get; set; }
     }
 }

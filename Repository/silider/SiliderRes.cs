@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DoAnBE.Models;
 using DoAnBE.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DoAnBE.Repository.silider
@@ -14,9 +15,25 @@ namespace DoAnBE.Repository.silider
             _context = context;
             _mapper = mapper;
         }
-        public async Task<int> AddSliderAsync(SliderModel Slider)
+        public async Task<int> AddSliderAsync([FromForm] SliderModel Slider)
         {
             var newSlider = _mapper.Map<Slider>(Slider);
+            ////var newSlider = new Slider{
+            ////    IsStatus= Slider.IsStatus,
+            ////    Link= Slider.Link,
+            ////    Name= Slider.Name,
+
+            ////};
+            ////if(Slider.fileImages?.Length > 0)
+            ////{
+            ////    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", Slider.fileImages.FileName);
+            ////    using (var stream = System.IO.File.Create(path))
+            ////    {
+            ////        await Slider.fileImages.CopyToAsync(stream);
+            ////    };
+            ////    newSlider.Image = "/images/" + Slider.fileImages.FileName;
+            ////}
+
             _context.Sliders.Add(newSlider);
             await _context.SaveChangesAsync();
             return newSlider.Id;

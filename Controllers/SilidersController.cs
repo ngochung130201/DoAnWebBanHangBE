@@ -13,6 +13,7 @@ namespace DoAnBE.Controllers
     {
         private readonly ComputerdbContext _context;
         private readonly ISilider _siliderRepo;
+        private readonly IWebHostEnvironment _environment;
         public SilidersController(ComputerdbContext context, ISilider siliderRepo)
         {
             _context = context;
@@ -34,7 +35,7 @@ namespace DoAnBE.Controllers
 
         }
         [HttpPost]
-        public async Task<IActionResult> AddSilider(SliderModel Silider)
+        public async Task<IActionResult> AddSilider( SliderModel Silider)
         {
             try
             {
@@ -46,6 +47,36 @@ namespace DoAnBE.Controllers
                 return BadRequest();
             }
         }
+        [HttpPost]
+        [Route("upload")]
+        public async Task<IActionResult> Upload([FromForm] SliderModel Silider)
+        {
+            var newSlider = new Slider
+            {
+                Id = Silider.Id,
+            
+                Name= Silider.Name, 
+                Link= Silider.Link,
+                IsStatus= Silider.IsStatus,
+            };
+            if(Silider.fileImages?.Length > 0)
+            {
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", Silider.fileImages.FileName);
+                using (var stream = System.IO.File.Create(path))
+                {
+                    await Silider.fileImages.CopyToAsync(stream);
+                };
+                newSlider.Image = "/images/" + Silider.fileImages.FileName;
+
+            }
+            else
+            {
+                newSlider.Image = "/images/" + "";
+            }
+            return Ok(newSlider);
+        }
+     
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> RemoveSilider(int id)
         {
@@ -69,6 +100,31 @@ namespace DoAnBE.Controllers
             await _siliderRepo.UpdateSliderAsync(id, Silider);
             return Ok();
         }
-      
+        [HttpPost]
+        [Route("upload-di-ngu")]
+        public async Task<IActionResult> AddSliderAsync([FromForm] SliderModel Slider)
+        {
+            //var newSlider = _mapper.Map<Slider>(Slider);
+            var newSlider = new Slider
+            {
+                IsStatus = Slider.IsStatus,
+                Link = Slider.Link,
+                Name = Slider.Name,
+
+            };
+            if (Slider.fileImages?.Length > 0)
+            {
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", Slider.fileImages.FileName);
+                using (var stream = System.IO.File.Create(path))
+                {
+                    await Slider.fileImages.CopyToAsync(stream);
+                };
+                newSlider.Image = "/images/" + Slider.fileImages.FileName;
+            }
+
+            _context.Sliders.Add(newSlider);
+            await _context.SaveChangesAsync();
+            return Ok(newSlider);
+        }
     }
 }

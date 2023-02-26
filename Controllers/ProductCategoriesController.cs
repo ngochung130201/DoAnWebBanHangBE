@@ -62,8 +62,18 @@ namespace DoAnBE.Controllers
         {
             try
             {
-                await _ProductCategoryRepo.RemoveProductCategoryAsync(id);
-                return Ok();
+                var getIdProduct = await _context.Products.FirstOrDefaultAsync(x=>x.CateID == id);
+               if(getIdProduct != null)
+                {
+                    return BadRequest();
+                }
+                else
+                {
+                    await _ProductCategoryRepo.RemoveProductCategoryAsync(id);
+                    return Ok();
+                }
+                  
+                
             }
             catch
             {

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DoAnBE.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace DoAnBE.ViewModels
 {
@@ -10,8 +11,9 @@ namespace DoAnBE.ViewModels
         [EmailAddress(ErrorMessage = "Email không hợp lệ")]
         public string Email { get; set; }
         public string Address { get; set; }
-        [RegularExpression("^([0-9]{10})$", ErrorMessage = "Số điện thoại không hợp lệ !.")]
-        public string Phone { get; set; }
+        [DataType(DataType.PhoneNumber, ErrorMessage = "Số điện thoại không hợp lệ !.")]
+        public string? Phone { get; set; }
+  
 
     }
 }
